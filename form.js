@@ -57,7 +57,10 @@ class Formulaire {
             btn.setAttribute("class", "button");
             console.log(this.form.id);
             console.log(this.error.id);
-            btn.setAttribute("onclick", `${fnc}()`);
+            let self = this;
+            btn.addEventListener("click", function() {
+                self.submite();
+            });
             div.appendChild(btn);
             return div;
         
@@ -73,6 +76,31 @@ class Formulaire {
         }
         this.form.appendChild(this.submit);
         this.container.appendChild(this.form);
+    }
+
+    submite() {
+        const values = this.getValues(this.form.id);
+        for (let i = 0 ; i < this.dataForm.length ; i++) {
+            if (values.hasOwnProperty(this.dataForm[i].name)) {
+                for (let j = 0 ; j < this.dataForm[i].error.length ; j++) {
+                    if (this.dataForm[i].error[j].test(values[this.dataForm[i].name]) === true) {
+                        return document.getElementById(this.error.id).innerHTML = this.dataForm[i].error[j].msg;
+                    }
+                }
+            }
+        }
+        document.getElementById(this.error.id).innerHTML = "";
+        sendValues(values);
+    }
+
+    getValues() {
+        let form = document.querySelector("#"+this.form.id);
+        let inputs = form.querySelectorAll("input, select, checkbox, textarea");
+        let values = {};
+        inputs.forEach(input => {
+            values[input.name] = input.value;
+        });
+        return values;
     }
 
 }
