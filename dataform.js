@@ -1,11 +1,3 @@
-// {
-//     errorEmpty : {
-//         'Le nom est obligatoire'
-//     },
-//     errorMinLength : {
-//         'Le nom doit contenir au moins 3 caractères'
-//     }
-// }
 const form = [
     {
         type: 'text',
