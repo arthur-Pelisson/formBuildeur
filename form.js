@@ -24,25 +24,12 @@ class Formulaire {
         this.error = new CreateNode({type: 'div', id: 'error'}).createNode();
         this.form = new CreateNode({type: 'div', id: 'form'}).createNode();
         for (let i = 0 ; i < this.dataForm.length ; i++) {
-            this.createInpute(this.dataForm[i]);
+            this.input.push(new CreateInpute(this.dataForm[i]).createInpute());
             this.label.push(this.createLabel(this.dataForm[i].name, this.dataForm[i].label));
         }
-        console.log(this.input);
-        console.log(this.label);
         this.submit = this.createButton("submit", "Envoyer");
     }
     
-    createInpute(data) {
-        this.input.push(new CreateInpute({
-            type: data.type,
-            name: data.name,
-            placeholder: data.placeholder,
-            required: data.required,
-            value: data.value, 
-            error: data.error
-        }).createInpute());
-    }
-
     createLabel(name, text) {
         let label = document.createElement('label');
         label.for = name;
@@ -51,19 +38,18 @@ class Formulaire {
     }
     
     createButton(fnc, txt) {
-            let div = new CreateNode({type: 'div', id: 'div-submit', class: "div-input"}).createNode();
-            let btn = document.createElement("button");
-            btn.innerHTML = txt;
-            btn.setAttribute("class", "button");
-            console.log(this.form.id);
-            console.log(this.error.id);
-            let self = this;
-            btn.addEventListener("click", function() {
-                self.submite();
-            });
-            div.appendChild(btn);
-            return div;
-        
+        let div = new CreateNode({type: 'div', id: 'div-submit', class: "div-input"}).createNode();
+        let btn = document.createElement("button");
+        btn.innerHTML = txt;
+        btn.setAttribute("class", "button");
+        console.log(this.form.id);
+        console.log(this.error.id);
+        let self = this;
+        btn.addEventListener("click", function() {
+            self.submite();
+        });
+        div.appendChild(btn);
+        return div;
     }
     
     display() {
@@ -102,7 +88,6 @@ class Formulaire {
         });
         return values;
     }
-
 }
 
 class CreateInpute {
@@ -111,12 +96,7 @@ class CreateInpute {
     }
 
     init(props) {
-        this.type = props.type;
-        this.name = props.name;
-        this.placeholder = props.placeholder;
-        this.required = props.required;
-        this.value = props.value;
-        this.error = props.error;
+        Object.assign(this, props);
     }
 
     createInpute() {
@@ -127,7 +107,6 @@ class CreateInpute {
         input.required = this.required;
         input.value = this.value;
         input.error = this.error;
-        
         return input;
     }
 }
@@ -138,9 +117,7 @@ class CreateNode {
     }
 
     init(props) {
-        this.type = props.type;
-        this.id = props.id;
-        this.class = props.class;
+        Object.assign(this, props);
     }
 
     createNode() {
