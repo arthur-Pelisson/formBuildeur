@@ -40,7 +40,7 @@ const form = [
         ]
     },
     {
-        type: 'text',
+        type: 'number',
         name: 'age',
         label: 'Âge',
         placeholder: 'Entrez votre Âge',

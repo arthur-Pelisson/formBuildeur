@@ -26,7 +26,7 @@ html, body {
     align-items: center;
     height: inherit;
     justify-content: center;
-    margin-top: 21%;
+    margin-top: 26%;
     overflow-y: auto;
     height: -webkit-fill-available;
 }
@@ -39,7 +39,8 @@ html, body {
 }
 
 .div-input input {
-    
+    width: 35%;
+    height: 25px;
     border-radius: 10px;
     border: 1px solid #ccc;
     padding: 5px;
@@ -51,7 +52,7 @@ html, body {
     background-color: #4CAF50;
     border: none;
     color: white;
-    padding: 5px 32px;
+    padding: 10px 32px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
@@ -59,5 +60,6 @@ html, body {
     cursor: pointer;
     border-radius: 10px;
     text-align: center;
+    width: 20%;
 }
 

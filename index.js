@@ -17,7 +17,6 @@ function submit() {
         }
     }
     document.getElementById(formulaire.error.id).innerHTML = "";
-
     sendValues(values);
 }
 
