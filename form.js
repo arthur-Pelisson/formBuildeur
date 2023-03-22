@@ -59,21 +59,25 @@ class Formulaire {
     }
     
     createButton(fnc, txt) {
+            let div = new CreateNode({type: 'div', id: 'div-submit', class: "div-input"}).createNode();
             let btn = document.createElement("button");
             btn.innerHTML = txt;
             btn.setAttribute("class", "button");
             console.log(this.form.id);
             console.log(this.error.id);
             btn.setAttribute("onclick", `${fnc}()`);
-            return btn;
+            div.appendChild(btn);
+            return div;
         
     }
     
     display() {
         this.form.appendChild(this.error);
         for (let i = 0 ; i < this.input.length ; i++) {
-            this.form.appendChild(this.label[i]);
-            this.form.appendChild(this.input[i]);
+            let div = new CreateNode({type: 'div', id: 'div-' + this.input[i].name, class: "div-input"}).createNode();
+            div.appendChild(this.label[i]);
+            div.appendChild(this.input[i]);
+            this.form.appendChild(div);
         }
         this.form.appendChild(this.submit);
         this.container.appendChild(this.form);
@@ -124,11 +128,15 @@ class CreateNode {
     init(props) {
         this.type = props.type;
         this.id = props.id;
+        this.class = props.class;
     }
 
     createNode() {
         let node = document.createElement(this.type);
         node.id = this.id;
+        if (this.class != undefined) {
+            node.className = this.class;
+        }
         return node;
     }
 }

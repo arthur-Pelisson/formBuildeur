@@ -12,7 +12,6 @@ const form = [
         name: 'nom',
         label: 'Nom',
         placeholder: 'Entrez votre nom',
-        // required: true,
         value: '',
         error: [
             {
@@ -29,7 +28,6 @@ const form = [
         name: 'prenom',
         label: 'Prénom',
         placeholder: "Entrez votre prénom",
-        // required: true,
         value: '',
         error: [
             {
@@ -46,7 +44,6 @@ const form = [
         name: 'age',
         label: 'Âge',
         placeholder: 'Entrez votre Âge',
-        // required: true,
         value: '',
         error: [
             {
@@ -63,7 +60,6 @@ const form = [
         name: 'localisation',
         label: 'Quartier/Ville',
         placeholder: 'Entrez votre quartier ou ville',
-        // required: true,
         value: '',
         error: [
             {
@@ -80,7 +76,6 @@ const form = [
         name: 'telephone',
         label: 'Telephone',
         placeholder: 'Entrez votre numero de telephone',
-        // required: true,
         value: '',
         error: [
             {
@@ -91,8 +86,7 @@ const form = [
             },
             {
                 test: function(value) {
-                    console.log(value.match(/^\+?[0-9]{13}$/));
-                    if (value.match(/^\+?[0-9]{12}$/)) return false;
+                    if (value.match(/^(?:(?:\+|00)33|0)\s*[1-9](?:[\s.-]*\d{2}){4}$/gmi)) return false;
                     return true;
                 },
                 msg: 'Le numero de telephone n\'est pas valide'
@@ -105,7 +99,6 @@ const form = [
         name: 'email',
         label: 'Email',
         placeholder: 'Entrez votre Email',
-        // required: true,
         value: '',
         error: [
             {
@@ -114,6 +107,14 @@ const form = [
                 },
                 msg: 'Le mail est obligatoire'
             },
+            {
+                test: function(value) {
+                    console.log(value.match(/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/));
+                    if (value.match(/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/)) return false;
+                    return true;
+                },
+                msg: "L'email n'est pas valide"
+            }
 
         ]
     },
