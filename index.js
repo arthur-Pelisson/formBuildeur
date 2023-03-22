@@ -34,17 +34,6 @@ function getValues(id) {
 }
 
 function sendValues(values) {
+    //ici envoyez les valeurs au mobile
     console.log(values);
 }
-
-// for (let i = 0 ; i < formulaire.dataForm.length ; i++) {
-//     if (values.hasOwnProperty(formulaire.dataForm[i].name)) {
-//         for (let j = 0 ; j < formulaire.dataForm[i].error.length ; j++) {
-//             if (formulaire.dataForm[i].error[j].test(values[formulaire.dataForm[i].name]) === true) {
-//                 return document.getElementById(formulaire.error.id).innerHTML = formulaire.dataForm[i].error[j].msg;
-//                 console.log(formulaire.dataForm[i].error[j].msg);
-//             }
-//         }
-//         console.log(formulaire.dataForm[i].name);
-//     }
-// }

@@ -20,14 +20,6 @@ class Formulaire {
         this.display();
     }
 
-    clear() {
-        
-    }
-
-    get getForm() {
-        return this.form;
-    }
-    
     createForm() {
         this.error = new CreateNode({type: 'div', id: 'error'}).createNode();
         this.form = new CreateNode({type: 'div', id: 'form'}).createNode();
@@ -81,14 +73,6 @@ class Formulaire {
         }
         this.form.appendChild(this.submit);
         this.container.appendChild(this.form);
-    }
-    
-    submit() {
-        console.log("okokokokkk");
-    }
-    
-    validate() {
-    
     }
 
 }
