@@ -12,10 +12,10 @@ const form = [
                 },
                 msg: 'Le nom est obligatoire'
             },
-
         ]
     },
     {
+
         type: 'text',
         name: 'prenom',
         label: 'Prénom',
@@ -108,6 +108,133 @@ const form = [
                 msg: "L'email n'est pas valide"
             }
 
+        ]
+    },
+    {
+        type: 'select',
+        options: [
+            {
+                value: "",
+                label: 'Choisissez votre sexe',
+                select: true
+            },
+            {
+            value: '1',
+            label: 'Option 1'
+        },
+        {
+            value: '2',
+            label: 'Option 2'
+        },
+        {
+            value: '3',
+            label: 'Option 3'
+        }
+        ],
+        name: 'options',
+        label: 'Options',
+        error: [
+            {
+                test: function(value) {
+                    return value === "";
+                },
+                msg: 'Vous devez selectionner une option'
+            },
+        ]
+    },
+    {
+        type: 'textarea',
+        name: 'textare',
+        label: 'Texarea',
+        placeholder: 'Entrez votre Texte',
+        value: '',
+        error: [
+            {
+                test: function(value) {
+                    return value.length > 10;
+                },
+                msg: 'Vous devez remplir le champ avec plus de 10 caractères'
+            },
+        ]
+    },
+    {
+        type: 'checkbox',
+        name: 'checkbox',
+        label: 'Checkbox',
+        value: "1",
+        error: [
+            {
+                test: function(value) {
+                    return value === "";
+                },
+                msg: 'Vous devez cocher la case'
+            },
+        ]
+    },
+    {
+        type: 'radio',
+        name: 'radio',
+        label: 'Radio',
+        value: "",
+        multichoix: true,
+        options: [
+            {
+                value: '1',
+                label: 'Option 1',
+                checked: true
+            }, 
+            {
+                value: '2',
+                label: 'Option 2',
+            }, 
+            {
+                value: "3",
+                label: "Option 3",
+            }
+        ],
+        error: [
+            {
+                test: function(value) {
+                    if (Array.isArray(value)) {
+                        if (value.length === 0) return true;
+                    }
+                    return value === "";
+                },
+                msg: 'Le mail est obligatoire'
+            },
+        ]
+    },
+    {
+        type: 'radio',
+        name: 'radio2',
+        label: 'Radio-1',
+        value: "",
+        multichoix: false,
+        options: [
+            {
+                value: '1',
+                label: 'Option 1',
+                checked: true
+            }, 
+            {
+                value: '2',
+                label: 'Option 2',
+            }, 
+            {
+                value: "3",
+                label: "Option 3",
+            }
+        ],
+        error: [
+            {
+                test: function(value) {
+                    if (Array.isArray(value)) {
+                        if (value.length === 0) return true;
+                    }
+                    return value === "";
+                },
+                msg: 'Le mail est obligatoire'
+            },
         ]
     },
 ]
