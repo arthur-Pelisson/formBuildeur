@@ -2,6 +2,7 @@ class Formulaire {
 
     constructor(props) {
         this.container = null;
+        this.test = false;
         this.init(props);
     }
     
@@ -12,6 +13,7 @@ class Formulaire {
         this.input = [];
         this.label = [];
         this.submit = null;
+        this.test = props.test;
         this.container = document.getElementById(props.divId);
     }
 
@@ -21,10 +23,10 @@ class Formulaire {
     }
 
     createForm() {
-        this.error = new CreateNode({type: 'div', id: 'error'}).createNode();
-        this.form = new CreateNode({type: 'div', id: 'form'}).createNode();
+        this.error = new Node({type: 'div', id: 'error'}).createNode();
+        this.form = new Node({type: 'div', id: 'form'}).createNode();
         for (let i = 0 ; i < this.dataForm.length ; i++) {
-            this.input.push(new CreateInpute(this.dataForm[i]).createInpute());
+            this.input.push(new Inpute(this.dataForm[i]).dispatch());
             this.label.push(this.createLabel(this.dataForm[i].name, this.dataForm[i].label));
         }
         this.submit = this.createButton("submit", "Envoyer");
@@ -38,12 +40,10 @@ class Formulaire {
     }
     
     createButton(fnc, txt) {
-        let div = new CreateNode({type: 'div', id: 'div-submit', class: "div-input"}).createNode();
+        let div = new Node({type: 'div', id: 'div-submit', class: "div-input"}).createNode();
         let btn = document.createElement("button");
         btn.innerHTML = txt;
         btn.setAttribute("class", "button");
-        console.log(this.form.id);
-        console.log(this.error.id);
         let self = this;
         btn.addEventListener("click", function() {
             self.submite();
@@ -55,7 +55,7 @@ class Formulaire {
     display() {
         this.form.appendChild(this.error);
         for (let i = 0 ; i < this.input.length ; i++) {
-            let div = new CreateNode({type: 'div', id: 'div-' + this.input[i].name, class: "div-input"}).createNode();
+            let div = new Node({type: 'div', id: 'div-' + this.input[i].name, class: "div-input"}).createNode();
             div.appendChild(this.label[i]);
             div.appendChild(this.input[i]);
             this.form.appendChild(div);
@@ -66,6 +66,7 @@ class Formulaire {
 
     submite() {
         const values = this.getValues(this.form.id);
+        if (this.test == false) return sendValues(values);
         for (let i = 0 ; i < this.dataForm.length ; i++) {
             if (values.hasOwnProperty(this.dataForm[i].name)) {
                 for (let j = 0 ; j < this.dataForm[i].error.length ; j++) {
@@ -84,19 +85,57 @@ class Formulaire {
         let inputs = form.querySelectorAll("input, select, checkbox, textarea");
         let values = {};
         inputs.forEach(input => {
+            if (input.type == "checkbox") {
+                if (!input.checked) {
+                    return values[input.name] = "";
+                }
+            }
+            if (input.type == "radio") {
+                this.getValuesRadios(input, values);
+                return;
+            }
             values[input.name] = input.value;
         });
         return values;
     }
+
+    getValuesRadios(input, values) {
+        if (input.checked === true) {
+            if (input.dataset.multi) {
+                if (values.hasOwnProperty(input.dataset.key)) {
+                    values[input.dataset.key].push(input.value);
+                    return;
+                }
+                return values[input.dataset.key] = [input.value];
+            }
+            return values[input.name] = input.value;
+        }
+        return;
+    }
 }
 
-class CreateInpute {
+class Inpute {
     constructor(props) {
         this.init(props);
     }
 
     init(props) {
         Object.assign(this, props);
+    }
+
+    dispatch() {
+        switch (this.type) {
+            case('select'):
+                return new Select(this).createSelect();
+            case('textarea'):
+                return new Textarea(this).createTextarea();
+            case('checkbox'):
+                return new Checkbox(this).createCheckbox();
+            case('radio'):
+                return new Radio(this).createRadio();
+            default:
+                return this.createInpute();
+        }
     }
 
     createInpute() {
@@ -111,7 +150,115 @@ class CreateInpute {
     }
 }
 
-class CreateNode {
+class Select {
+    constructor(props) {
+        Object.assign(this, props);
+    }
+
+    createSelect() {
+        let select = document.createElement('select');
+        select.name = this.name;
+        select.required = this.required;
+        for (let i = 0 ; i < this.options.length ; i++) {
+            let option = document.createElement('option');
+            option.value = this.options[i]['value'];
+            option.innerHTML = this.options[i]['label'];
+            if (this.options[i]['selected'] === true) {
+                option.selected = true;
+            }
+            select.appendChild(option);
+        }
+        return select;
+    }
+}
+
+class Textarea {
+    constructor(props) {
+        Object.assign(this, props);
+    }
+
+    createTextarea() {
+        let textarea = document.createElement('textarea');
+        textarea.name = this.name;
+        textarea.required = this.required;
+        textarea.placeholder = this.placeholder;
+        textarea.value = this.value;
+        return textarea;
+    }
+}
+
+class Checkbox {
+    constructor(props) {
+        Object.assign(this, props);
+    }
+
+    createCheckbox() {
+        let checkbox = document.createElement('input');
+        checkbox.type = this.type;
+        checkbox.name = this.name;
+        checkbox.required = this.required;
+        checkbox.value = this.value;
+        return checkbox;
+    }
+}
+
+class Radio {
+    constructor(props) {
+        Object.assign(this, props);
+    }
+
+    createRadio() {
+        let div = new Node({name: this.name ,type: 'div', id: 'div-container-' + this.name, class: "div-input"}).createNode();
+        for (let i = 0 ; i < this.options.length ; i++) {
+            let radio = document.createElement('input');
+            let label = document.createElement('label');
+            label.for = name;
+            label.innerHTML = this.options[i].label;
+            radio.type = this.type;
+            radio.name = this.name;
+            radio.required = this.required;
+            radio.value = this.options[i].value;
+            if (this.options[i]['selected'] === true) {
+                radio.checked = true;
+            }
+            if (this.multichoix === true) {
+                this.multiChoix(radio, i, label);
+            }
+            if (this.options[i].checked === true) {
+                radio.checked = true;
+            }
+            div.appendChild(label);
+            div.appendChild(radio);
+        }
+        return div;
+    }
+
+    multiChoix(radio, i, label) {
+        console.log("multi");
+        this.manageCheck(radio);
+        radio.setAttribute('data-key', this.name);
+        radio.setAttribute('data-multi', true);
+        radio.setAttribute('data-tag', false);
+        radio.name = radio.name + "-" + i;
+        label.name = radio.name + "-" + i; 
+    }
+
+    manageCheck(input) {
+        input.onmousedown = function() {
+            this.dataset.tag = this.checked;
+        }
+        input.onclick = function() {
+            if (this.dataset.tag == "true") {
+              this.checked = false;
+              this.dataset.tag = "false";
+            } else {
+              this.dataset.tag = "true";
+            }
+        }
+    }
+}
+
+class Node {
     constructor(props) {
         this.init(props);
     }
@@ -122,6 +269,7 @@ class CreateNode {
 
     createNode() {
         let node = document.createElement(this.type);
+        node.name = this.name;
         node.id = this.id;
         if (this.class != undefined) {
             node.className = this.class;
