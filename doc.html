@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="documentation.css">
+    <script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="docson" src="../docson.js"></script>
+    <title>Documentation</title>
+</head>
+<body>
+    <div id="container" ></div>  
+</body>
+<script src="http://somewhere/path-to-docson/public/js/widget.js" data-schema="/path-to/schema.json"> </script>
+<script src="form.js"></script>
+<!-- <script src="documentation.js"></script> -->
+<script>
+    const container = document.getElementById('container');
+    const jsondoc = Formulaire.getDocumentation();
+    const jsonData = {
+        "name": "My Project",
+        "description": "This is a sample project",
+        "version": "1.0.0",
+        "author": "John Doe",
+        "license": "MIT"
+};
+
+const doc = docson.doc(jsonData, {
+  // options pour la documentation (facultatif)
+});
+
+document.getElementById(container).appendChild(doc);
+    console.log(doc);
+</script>
+</html>

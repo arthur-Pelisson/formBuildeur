@@ -112,10 +112,50 @@ class Formulaire {
         }
         return;
     }
+
+    static doc() {
+        const doc = {
+            "Formulaire": {
+                "description": "Créer un formulaire",
+                "params": [
+                    {
+                        name: "divId",
+                        type: "string",
+                        require: "true",
+                    },
+                    {
+                        name: "dataForm",
+                        type: "array",
+                        require: "true",
+                    },
+                    {
+                        name: "test",
+                        type: "boolean",
+                        require: "false",
+                    }
+                ],
+            }
+        };
+        return doc;
+    }
+
+    static getDocumentation() {
+        const doc = [];
+        doc.push(Formulaire.doc());
+        doc.push(Node.doc());
+        doc.push(Inpute.doc());
+        doc.push(Select.doc());
+        doc.push(Textarea.doc());
+        doc.push(Checkbox.doc());
+        doc.push(Radio.doc());
+        return doc;
+    }
 }
 
 class Inpute {
     constructor(props) {
+        this.placeholder = "";
+        this.value = "";
         this.init(props);
     }
 
@@ -148,10 +188,57 @@ class Inpute {
         input.error = this.error;
         return input;
     }
+
+    static doc() {
+        const doc = {
+            "Inpute": {
+                "description": "Créer un input",
+                "params": [
+                    {
+                        name: "type",
+                        type: "string",
+                        require: "true",
+                    },
+                    {
+                        name: "name",
+                        type: "string",
+                        require: "true",
+                        unique: "true",
+                    },
+                    {
+                        name: "placeholder",
+                        type: "string",
+                        require: "false",
+                    },
+                    {
+                        name: "required",
+                        type: "boolean",
+                        require: "false",
+                    },
+                    {
+                        name: "value",
+                        type: "string",
+                        require: "false",
+                    },
+                    {
+                        name: "error",
+                        type: "array",
+                        require: "false",
+                        test: {
+                            "test": "function",
+                            "msg": "string"
+                        }
+                    }
+                ],
+            }
+        };
+        return doc;
+    }
 }
 
 class Select {
     constructor(props) {
+        this.value = "";
         Object.assign(this, props);
     }
 
@@ -170,10 +257,52 @@ class Select {
         }
         return select;
     }
+
+    static doc() {
+        const doc = {
+            "Select": {
+                "description": "Créer un select",
+                "params": [
+                    {
+                        name: "name",
+                        type: "string",
+                        require: "true",
+                        unique: "true",
+                    },
+                    {
+                        name: "required",
+                        type: "boolean",
+                        require: "false",
+                    },
+                    {
+                        name: "options",
+                        type: "array",
+                        require: "true",
+                    }, 
+                    {
+                        name: "value",
+                        type: "string",
+                        require: "false",
+                    }, 
+                    {
+                        name: "error",
+                        type: "array",
+                        require: "false",
+                        test: {
+                            "test": "function",
+                            "msg": "string"
+                        }
+                    }
+                ],
+            }
+        };
+        return doc;
+    }
 }
 
 class Textarea {
     constructor(props) {
+        this.value = "";
         Object.assign(this, props);
     }
 
@@ -185,10 +314,53 @@ class Textarea {
         textarea.value = this.value;
         return textarea;
     }
+
+    static doc() {
+        const doc = {
+            "Textarea": {
+                "description": "Créer un textarea",
+                "params": [
+                    {
+                        name: "name",
+                        type: "string",
+                        require: "true",
+                        unique: "true",
+                    },
+                    {
+                        name: "required",
+                        type: "boolean",
+                        require: "false",
+                    },
+                    {
+                        name: "placeholder",
+                        type: "string",
+                        require: "false",
+                    },
+                    {
+                        name: "value",
+                        type: "string",
+                        require: "false",
+                    },
+                    {
+                        name: "error",
+                        type: "array",
+                        require: "false",
+                        test: {
+                            "test": "function",
+                            "msg": "string"
+                        }
+                    }
+                ],
+            }
+        };
+        return doc;
+    }
+
 }
 
 class Checkbox {
     constructor(props) {
+        this.value = "";
         Object.assign(this, props);
     }
 
@@ -200,10 +372,52 @@ class Checkbox {
         checkbox.value = this.value;
         return checkbox;
     }
+
+    static doc() {
+        const doc = {
+            "Checkbox": {
+                "description": "Créer un checkbox",
+                "params": [
+                    {
+                        name: "type",
+                        type: "string",
+                        require: "true",
+                    },
+                    {
+                        name: "name",
+                        type: "string",
+                        require: "true",
+                        unique: "true",
+                    },
+                    {
+                        name: "required",
+                        type: "boolean",
+                        require: "false",
+                    },
+                    {
+                        name: "value",
+                        type: "string",
+                        require: "false",
+                    },
+                    {
+                        name: "error",
+                        type: "array",
+                        require: "false",
+                        test: {
+                            "test": "function",
+                            "msg": "string"
+                        }
+                    }
+                ],
+            }
+        };
+        return doc;
+    }
 }
 
 class Radio {
     constructor(props) {
+        this.value = "";
         Object.assign(this, props);
     }
 
@@ -256,6 +470,52 @@ class Radio {
             }
         }
     }
+
+    static doc() {
+        const doc = {
+            "Radio": {
+                "description": "Créer un radio",
+                "params": [
+                    {
+                        name: "type",
+                        type: "string",
+                        require: "true",
+                    },
+                    {
+                        name: "name",
+                        type: "string",
+                        require: "true",
+                        unique: "true",
+                    },
+                    {
+                        name: "required",
+                        type: "boolean",
+                        require: "false",
+                    },
+                    {
+                        name: "options",
+                        type: "array",
+                        require: "true",
+                    }, 
+                    {
+                        name: "value",
+                        type: "string",
+                        require: "false",
+                    }, 
+                    {
+                        name: "error",
+                        type: "array",
+                        require: "false",
+                        test: {
+                            "test": "function",
+                            "msg": "string"
+                        }
+                    }
+                ],
+            }
+        };
+        return doc;
+    }
 }
 
 class Node {
@@ -275,6 +535,38 @@ class Node {
             node.className = this.class;
         }
         return node;
+    }
+
+    static doc() {
+        const doc = {
+            "Node": {
+                "description": "Créer un node",
+                "params": [
+                    {
+                        name: "type",
+                        type: "string",
+                        require: "true",
+                    },
+                    {
+                        name: "name",
+                        type: "string",
+                        require: "true",
+                        unique: "true",
+                    },
+                    {
+                        name: "id",
+                        type: "string",
+                        require: "false",
+                    },
+                    {
+                        name: "class",
+                        type: "string",
+                        require: "false",
+                    },
+                ],
+            }
+        };
+        return doc;
     }
 }
 
